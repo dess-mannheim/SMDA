@@ -1,7 +1,7 @@
 # IS 618 Social Media Data Analysis - FSS26 (University of Mannheim)
 A course developed and taught by [Indira Sen](https://indiiigo.github.io/), [Maximilian Kreutner](https://www.bwl.uni-mannheim.de/strohmaier/team/wissenschaftliche-mitarbeitende/maximilian-kreutner/), and [Georg Ahnert](https://georgahnert.de/)
 
-This course focuses on the collection and analysis of social media data for two types of societally relevant applications --- for studying the impact of social media on society as well as the use of social media data to learn about society. The course will introduce technical details on the development of social media platforms, programmatic and large-scale data collection of platform data, and the analysis of this data using computational methods. Students will be introduced to data collection from a variety of platforms including Wikipedia, Youtube, and Tiktok. This course will also critically reflect on the epistemology of social media data and the validity of its analysis.
+This course focuses on the collection and analysis of social media data for two types of societally relevant applications --- for studying the impact of social media on society as well as the use of social media data to learn about society. The course will introduce technical details on the development of social media platforms, programmatic and large-scale data collection of platform data, and the analysis of this data using computational methods. Students will be introduced to data collection from a variety of platforms including Wikipedia, Youtube, and Tiktok. This course will also help students critically reflect on the epistemology of social media data and the validity of its analysis.
 
 
 ## Schedule and Materials
