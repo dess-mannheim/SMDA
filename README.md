@@ -7,7 +7,7 @@ This course focuses on the collection and analysis of social media data for two 
 ## Schedule and Materials
 | Week | Lecture | Readings | Tutorial |
 |---|---|---|---|
-| 1 | Course Intro + Potentials and Pitfalls of Social Media Data |  | Infrastructure setup |
+| 1 | [Course Intro + Potentials and Pitfalls of Social Media Data](https://github.com/dess-mannheim/SMDA/blob/main/Lectures/01_IS%20618%20SMDA%20Intro.pdf) |  | Infrastructure setup |
 | 2 | Data Collection 1: Web Scraping | 1. Lazer, David MJ, et al. ["Computational social science: Obstacles and opportunities."](https://www.science.org/doi/10.1126/science.aaz8170) Science 369.6507 (2020): 1060-1062.<br>2. Gerard, Patrick, Nicholas Botzer, and Tim Weninger. ["Truth social dataset."](https://arxiv.org/abs/2303.11240) Proceedings of the international AAAI conference on web and social media. Vol. 17. 2023. | python revision and web scraping |
 | 3 | Data Collection 2: APIs |  | dynamic webpage scraping, API intro  |
 | 4 | Data Collection 3: Platform Affordances |  | Wikipedia, Bluesky API |
