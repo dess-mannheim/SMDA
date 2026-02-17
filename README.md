@@ -8,8 +8,8 @@ This course focuses on the collection and analysis of social media data for two 
 | Week | Lecture | Readings | Tutorial |
 |---|---|---|---|
 | 1 | [Course Intro + Potentials and Pitfalls of Social Media Data](https://github.com/dess-mannheim/SMDA/blob/main/Lectures/01_IS%20618%20SMDA%20Intro.pdf) |  | Infrastructure setup |
-| 2 | Data Collection 1: Web Scraping | 1. Lazer, David MJ, et al. ["Computational social science: Obstacles and opportunities."](https://www.science.org/doi/10.1126/science.aaz8170) Science 369.6507 (2020): 1060-1062.<br>2. Gerard, Patrick, Nicholas Botzer, and Tim Weninger. ["Truth social dataset."](https://arxiv.org/abs/2303.11240) Proceedings of the international AAAI conference on web and social media. Vol. 17. 2023. | python revision and web scraping |
-| 3 | Data Collection 2: APIs |  | dynamic webpage scraping, API intro  |
+| 2 | [Data Collection 1: Web Scraping](https://github.com/dess-mannheim/SMDA/blob/main/Lectures/02_IS%20618%20SMDA%20Platform%20Intro%20and%20Web%20Scraping.pdf) | 1. Lazer, David MJ, et al. ["Computational social science: Obstacles and opportunities."](https://www.science.org/doi/10.1126/science.aaz8170) Science 369.6507 (2020): 1060-1062.<br>2. Gerard, Patrick, Nicholas Botzer, and Tim Weninger. ["Truth social dataset."](https://arxiv.org/abs/2303.11240) Proceedings of the international AAAI conference on web and social media. Vol. 17. 2023. | python revision and web scraping |
+| 3 | Data Collection 2: APIs | 1. David Garcia, ["Background on APIs"](https://dgarcia-eu.github.io/SocialDataScience/Tutorials/2_SocialDynamics/027_APIs-Reddit/APIS-Reddit.html)<br>2. Murtfeldt, Ryan, et al. ["RIP Twitter API: A eulogy to its vast research contributions."](https://arxiv.org/abs/2404.07340) arXiv preprint arXiv:2404.07340 (2024).| dynamic webpage scraping, API intro  |
 | 4 | Data Collection 3: Platform Affordances |  | Wikipedia, Bluesky API |
 | 5 | Data Collection 4: Sampling Social Media Data |  | Youtube, Tiktok |
 | 6 | Data Processing 1: Data Cleaning  |  | data cleaning |
