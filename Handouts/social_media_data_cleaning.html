@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Social Media Data Cleaning</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a2e;
+      --ink-light: #4a4a6a;
+      --accent: #c0392b;
+      --accent-soft: #f8ecea;
+      --teal: #16677a;
+      --teal-soft: #e8f4f6;
+      --gold: #d4891a;
+      --gold-soft: #fef9f0;
+      --bg: #fafaf7;
+      --rule: #d8d8ce;
+      --code-bg: #f2f2f0;
+      --serif: 'Lora', Georgia, serif;
+      --sans: 'Source Sans 3', 'Helvetica Neue', sans-serif;
+      --mono: 'Source Code Pro', monospace;
+    }
+
+    html { font-size: 17px; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      padding: 0;
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 56px 64px 80px;
+    }
+
+    /* ── Header ── */
+    .doc-header {
+      border-bottom: 3px solid var(--ink);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+
+    .doc-header .kicker {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .doc-header h1 {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .doc-header .byline {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      color: var(--ink-light);
+      font-style: italic;
+    }
+
+    /* ── Running header stripe ── */
+    .stripe {
+      background: var(--ink);
+      color: #fff;
+      padding: 8px 64px;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: var(--sans);
+      font-weight: 600;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── Body text ── */
+    p {
+      font-size: 0.97rem;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+
+    /* ── Section heading ── */
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 2.6rem;
+      margin-bottom: 0.8rem;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid var(--rule);
+    }
+
+    h3 {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-top: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── Definition box ── */
+    .definition {
+      background: var(--teal-soft);
+      border-left: 4px solid var(--teal);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 1.4rem 0;
+    }
+
+    .definition .label {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+
+    .definition p {
+      margin: 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    /* ── Key concept callout ── */
+    .callout {
+      background: var(--accent-soft);
+      border: 1px solid #e8c8c4;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 16px 20px;
+      margin: 1.4rem 0;
+    }
+
+    .callout .label {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .callout p { margin: 0; font-size: 0.94rem; }
+
+    /* ── Tip / Note box ── */
+    .note {
+      background: var(--gold-soft);
+      border: 1px solid #eed9a8;
+      border-left: 4px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 14px 20px;
+      margin: 1.4rem 0;
+    }
+
+    .note .label {
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .note p { margin: 0; font-size: 0.93rem; }
+
+    /* ── Numbered list ── */
+    ol.steps {
+      counter-reset: steps;
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 1.4rem;
+    }
+
+    ol.steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 0.9rem;
+      font-size: 0.95rem;
+    }
+
+    ol.steps li::before {
+      content: counter(steps);
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      background: var(--ink);
+      color: #fff;
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 0.82rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    /* ── Bullet list ── */
+    ul.items {
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0 1.2rem;
+    }
+
+    ul.items li {
+      padding-left: 1.4rem;
+      position: relative;
+      margin-bottom: 0.45rem;
+      font-size: 0.95rem;
+    }
+
+    ul.items li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.75rem;
+      top: 4px;
+    }
+
+    /* ── Code block ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 16px 18px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      line-height: 1.6;
+      margin: 1rem 0 1.4rem;
+      color: #2c2c3a;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: var(--code-bg);
+      border: 1px solid var(--rule);
+      border-radius: 3px;
+      padding: 1px 5px;
+      color: var(--teal);
+    }
+
+    /* ── Two-column layout ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 1.2rem 0;
+    }
+
+    .col-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+
+    .col-card h4 {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 10px;
+    }
+
+    .col-card ul { list-style: none; padding: 0; }
+
+    .col-card ul li {
+      font-size: 0.9rem;
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0ea;
+    }
+
+    .col-card ul li:last-child { border: none; }
+
+    /* ── Figure / table ── */
+    .figure {
+      margin: 1.6rem 0;
+      text-align: center;
+    }
+
+    .figure-caption {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--ink-light);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* ── Pipeline diagram ── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 1.4rem 0;
+      flex-wrap: wrap;
+    }
+
+    .pipe-step {
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 18px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      min-width: 110px;
+    }
+
+    .pipe-step:first-child { border-radius: 6px 0 0 6px; }
+    .pipe-step:last-child  { border-radius: 0 6px 6px 0; }
+    .pipe-step.alt { background: var(--teal); }
+    .pipe-step.alt2 { background: var(--accent); }
+    .pipe-step.alt3 { background: var(--gold); color: var(--ink); }
+
+    .pipe-arrow {
+      width: 0;
+      height: 0;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 12px solid var(--ink);
+      flex-shrink: 0;
+    }
+
+    .pipe-arrow.alt  { border-left-color: var(--teal); }
+    .pipe-arrow.alt2 { border-left-color: var(--accent); }
+    .pipe-arrow.alt3 { border-left-color: var(--gold); }
+
+    /* ── Summary table ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2rem 0 1.6rem;
+      font-size: 0.88rem;
+    }
+
+    thead tr {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-family: var(--sans);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    tbody tr:nth-child(even) { background: #f4f4f0; }
+    tbody tr:nth-child(odd)  { background: #fff; }
+
+    td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+    }
+
+    td:first-child { font-weight: 600; color: var(--teal); }
+
+    /* ── Footer ── */
+    .doc-footer {
+      margin-top: 56px;
+      border-top: 1.5px solid var(--rule);
+      padding-top: 20px;
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      font-family: var(--sans);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      .page { padding: 28px 20px 60px; }
+      .stripe { padding: 8px 20px; flex-direction: column; gap: 2px; }
+      .two-col { grid-template-columns: 1fr; }
+      .pipeline { flex-direction: column; }
+      .pipe-step { min-width: 100%; border-radius: 0; }
+      .pipe-step:first-child { border-radius: 6px 6px 0 0; }
+      .pipe-step:last-child  { border-radius: 0 0 6px 6px; }
+      .pipe-arrow { border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 12px solid var(--ink); border-bottom: none; width: 0; height: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="stripe">
+  <span>SMDA: Data Cleaning &amp; Preparation</span>
+  <span>Handout 1</span>
+</div>
+
+<div class="page">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="doc-header">
+    <div class="kicker">Handout 1: Social Media Data Cleaning [by Indira Sen]</div>
+    <h1>Social Media Data Cleaning</h1>
+    <div class="byline">IS 618 Social Media Data Analysis · 2026</div>
+  </header>
+
+  <!-- ══════════ 1. WHY ══════════ -->
+  <h2>1. Why do we Have to Clean Social Media Data?</h2>
+
+  <p>Unlike curated datasets in traditional research, e.g., tabulated survey datasets, raw social media data is inherently messy: it contains noise, inconsistencies, missing values, and artefacts of platform behaviour. Even if youget structured JSON data from an API, you might have to do some data cleaning nonetheless.</p>
+
+  <div class="definition">
+    <div class="label">Definition</div>
+    <p><strong>Data cleaning</strong> (also called <em>data wrangling</em> or <em>data munging</em>) is the process of detecting and correcting or removing corrupt, inaccurate, or irrelevant records from a dataset to improve its quality before analysis.</p>
+  </div>
+
+  <p>Poorly cleaned data can lead to invalid conclusions — even when the downstream analysis is technically correct. In social media research the phrase <em>"garbage in, garbage out"</em> is especially apt.</p>
+
+  
+  <!-- ══════════ 2. SOURCES OF NOISE ══════════ -->
+  <h2>2. Sources of Noise in Social Media Data</h2>
+
+  <p>Understanding <em>why</em> data is dirty is the first step to cleaning it systematically. Social media noise arises from several overlapping sources:</p>
+
+  <div class="two-col">
+    <div class="col-card">
+      <h4>Platform-side noise</h4>
+      <ul>
+        <li>Bot and automated accounts</li>
+        <li>Spam and promotional content</li>
+        <li>Deleted or suspended accounts</li>
+        <li>Retweets / reshares (duplicate signal)</li>
+        <li>API sampling artefacts</li>
+      </ul>
+    </div>
+    <div class="col-card">
+      <h4>User-side noise</h4>
+      <ul>
+        <li>Misspellings and abbreviations</li>
+        <li>Slang, emojis, and neologisms</li>
+        <li>Code-switching and multiple languages</li>
+      </ul>
+    </div>
+    <div class="col-card">
+      <h4>Collection-side noise</h4>
+      <ul>
+        <li>Rate-limited or incomplete pulls</li>
+        <li>Timestamp timezone errors</li>
+        <li>Encoding issues (<a target="_blank" rel="noopener noreferrer" href = 'https://en.wikipedia.org/wiki/Mojibake'>mojibake</a>)</li>
+        <li>Nested JSON parsing failures</li>
+        <li>Schema changes across API versions</li>
+      </ul>
+    </div>
+    <div class="col-card">
+      <h4>Analysis-side noise (will make more sense we talk about data analysis!)</h4>
+      <ul>
+        <li>Irrelevant posts matching keywords</li>
+        <li>Cross-domain contamination</li>
+        <li>Duplicated records after merges</li>
+        <li>Imbalanced temporal coverage</li>
+        <li>Selection bias in filtered samples</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══════════ 3. CLEANING PIPELINE ══════════ -->
+  <h2>3. The Data Cleaning Pipeline</h2>
+
+  <p>A robust cleaning workflow follows a sequential pipeline. Each stage should be documented so that the process is reproducible and auditable.</p>
+
+  <div class="pipeline">
+    <div class="pipe-step">Collect<br/><small>raw data</small></div>
+    <div class="pipe-arrow"></div>
+    <div class="pipe-step alt">Deduplicate</div>
+    <div class="pipe-arrow alt"></div>
+    <div class="pipe-step alt">Filter<br/><small>bots / spam</small></div>
+    <div class="pipe-arrow alt"></div>
+    <div class="pipe-step alt2">Normalise<br/><small>text</small></div>
+    <div class="pipe-arrow alt2"></div>
+    <div class="pipe-step alt3">Validate<br/><small>&amp; document</small></div>
+  </div>
+
+  <div class="figure-caption" style="text-align:left; margin-top:-8px;">Figure 1. Standard social media data cleaning pipeline.</div>
+
+  <h3>Stage 1 — Deduplication</h3>
+
+  <p>Duplicate records appear when the same post is collected via multiple queries, or when a user re-posts identical content. Exact duplicates can be removed by comparing unique post IDs or content. Near-duplicates (e.g., retweets with slight edits) require fuzzy matching.</p>
+
+  <div class="note">
+    <div class="label">Tip</div>
+    <p>Always deduplicate <em>before</em> any other cleaning step — filtering or normalising duplicate rows wastes computation and may introduce asymmetric artefacts.</p>
+  </div>
+
+  <h3>Stage 2 — Bot and Spam Detection</h3>
+
+  <p>Unless your research question is related to bot activity, leaving bots and their content in a dataset distorts frequency counts, network centrality measures, and other estimates of interest.</p>
+
+  <p>Common heuristics for flagging likely bots:</p>
+
+  <ul class="items">
+    <li><strong>Post velocity:</strong> accounts posting more than a plausible human rate (e.g., &gt;50 posts/hour) are suspicious.</li>
+    <li><strong>Account age vs. post count:</strong> very new accounts with very high post counts.</li>
+    <li><strong>Profile completeness:</strong> missing profile picture, bio, or location fields.</li>
+    <li><strong>Content repetition:</strong> identical or near-identical text across multiple posts.</li>
+    <li><strong>Dedicated tools:</strong> <a target="_blank" rel="noopener noreferrer" href = https://botometer.osome.iu.edu/>Botometer</a> (formerly BotOrNot) provides a probabilistic bot score via API.</li>
+  </ul>
+
+
+  <div class="callout">
+    <div class="label">Important Note</div>
+    <p>No bot detection method is perfect. Document the threshold chosen and report sensitivity analyses (also called robustness checks) showing how results change across different thresholds.</p>
+  </div>
+
+  <h3>Stage 3 — Language Filtering</h3>
+
+  <p>Many social media studies focus on a single language, unless they are explicitly interested in multilinguality, e.g., <a target="_blank" rel="noopener noreferrer" href = 'https://ojs.aaai.org/index.php/ICWSM/article/view/22174'>multilingual's interactions in cross-lingual settings</a>. Mixing languages without explicitly modelling them confounds NLP pipelines (tokenisers, sentiment lexicons, word embeddings are language-specific). Detect language with a probabilistic library and retain only posts above a confidence threshold.</p>
+
+
+  <h3>Stage 4 — Text Normalisation</h3>
+
+  <p>Raw social media text contains many features that must be handled deliberately — not automatically stripped, because some (e.g., hashtags, emojis) carry semantic signal.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Element</th>
+        <th>Typical treatment</th>
+        <th>Caution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>URLs</td>
+        <td>Replace with <code>[URL]</code> token or remove</td>
+        <td>URL domain can be a signal (news vs. spam)</td>
+      </tr>
+      <tr>
+        <td>Mentions (<code>@user</code>)</td>
+        <td>Replace with <code>[USER]</code> or remove</td>
+        <td>Preserve for network analysis</td>
+      </tr>
+      <tr>
+        <td>Hashtags (<code>#topic</code>)</td>
+        <td>Segment and keep text; remove <code>#</code></td>
+        <td>Often contain key semantic content</td>
+      </tr>
+      <tr>
+        <td>Emojis</td>
+        <td>Convert to text description or keep as-is</td>
+        <td>Emojis are critical for sentiment tasks</td>
+      </tr>
+      <tr>
+        <td>HTML entities</td>
+        <td>Decode (<code>&amp;amp;</code> → <code>&</code>)</td>
+        <td>Always decode before any analysis</td>
+      </tr>
+      <tr>
+        <td>Lowercasing</td>
+        <td>Convert to lowercase</td>
+        <td>May destroy named entity casing signals</td>
+      </tr>
+      <tr>
+        <td>Punctuation</td>
+        <td>Task-dependent; often keep for sentiment</td>
+        <td>"!!!" carries intensity information</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+  <h3>Stage 5 — Handling Missing Data</h3>
+
+  <p>Social media datasets routinely have missing fields — location data (users opt out), profile metadata (deleted accounts), or engagement counts (API change). The correct strategy depends on how the field is used:</p>
+
+  <ul class="items">
+    <li><strong>Listwise deletion:</strong> drop rows with any missing values in analysis-critical columns. Safe when missingness is random and the dataset is large.</li>
+    <li><strong>Column exclusion:</strong> omit the variable entirely if a substantial portion is missing.</li>
+    <li><strong>Imputation:</strong> fill with median/mode for numerical fields; use model-based imputation for important variables. Rarely appropriate for free-text or images.</li>
+  </ul>
+
+  <!-- ══════════ 4. DOCUMENTATION ══════════ -->
+  <h2>4. Documenting the Cleaning Process</h2>
+
+  <p>Reproducibility requires that every filtering and transformation decision be logged. A cleaning log should record: the step performed, the rationale, the number of rows before and after, and any parameters chosen.</p>
+
+
+  <div class="note">
+    <div class="label">Best Practice</div>
+    <p>Export the cleaning log as a supplementary table alongside your analysis. Reviewers and replicators need to know <em>exactly</em> how many and which observations were removed at each stage.</p>
+  </div>
+
+  <!-- ══════════ 5. QUALITY CHECKS ══════════ -->
+  <h2>5. Quality Checks Before Analysis</h2>
+
+  <p>After cleaning, perform a final audit before proceeding to analysis:</p>
+
+  <ol class="steps">
+    <li><strong>Distribution checks:</strong> plot post volume over time. Unexpected spikes or gaps often signal collection errors or platform events (outages, coordinated campaigns).</li>
+    <li><strong>Top-account audit:</strong> inspect the 10–20 most prolific accounts manually. Are they legitimate? Are they disproportionately influencing aggregates?</li>
+    <li><strong>Text sample review:</strong> read a random sample of 50–100 cleaned posts. Do they look like genuine on-topic content?</li>
+    <li><strong>Metadata consistency:</strong> verify that derived fields (e.g., <code>day_of_week</code> from timestamp) are consistent. Check timezone alignment.</li>
+  </ol>
+
+  <!-- ══════════ 6. ETHICAL CONSIDERATIONS ══════════ -->
+  <h2>6. Ethical Considerations</h2>
+
+  <p>Data cleaning is often considered a minor step in the SMDA pipeline and the specific steps are underreported. However, it is an important part nonetheless — it involves choices that shape who and what is represented in the analysis. After all, how you clean your data might have a big imapct on what you're trying to study --- <a target="_blank" rel="noopener noreferrer" href = https://journals.sagepub.com/doi/full/10.1177/0894439311404119>it can even change your findings entirely</a></p>
+
+  <div class="callout">
+    <div class="label">Important Note</div>
+    <p><strong>Cleaning bias:</strong> aggressive text normalisation (e.g., removing non-standard spellings) can systematically exclude the speech patterns of marginalised communities, skewing results toward dominant linguistic norms.</p>
+  </div>
+
+  <p>Additional points to keep in mind:</p>
+  <ul class="items">
+    <li><strong>Anonymisation:</strong> replace or hash usernames before sharing datasets or using them in examples.</li>
+    <li><strong>Temporal coverage:</strong> ensure the cleaning process does not disproportionately remove data from certain time periods, which could bias longitudinal conclusions.</li>
+  </ul>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="doc-footer">
+    <span>Handout 1: Social Media Data Cleaning [by Indira Sen]</span>
+    <span>2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
