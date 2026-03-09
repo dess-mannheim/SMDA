@@ -22,6 +22,11 @@ This course focuses on the collection and analysis of social media data for two 
 | 13 | Midway Presentations |  | project work + consulation |
 | 14 | Summary and Outlook |  | project work + consulation |
 
+## Resources
+
+1. [A tutorial on collecting and analyzing Wikipedia data](https://meta.wikimedia.org/wiki/Wikimedia_Data_Tutorial_ICWSM_2024) by Martin Gerlach, Lucie-Aimée Kaffee, and Tiziano Piccardi
+2. [GESIS guides on digital trace data](https://www.gesis.org/en/gesis-guides/gesis-guides-to-digital-behavioral-data) (which includes social media data)
+3. [A tutorial on the Tiktok API](https://methodslab.weizenbaum-institut.de/2024/11/12/tutorial-when-and-how-to-use-the-official-tiktok-api/) by Lion Wedel
 
 ## Credits
 
