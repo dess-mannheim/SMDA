@@ -1,1 +1,4 @@
 .DS_Store
+
+# .env files for api keys
+Tutorials/.env
