@@ -39,16 +39,17 @@ All members of a group do not have to present but all members should be prepared
 
 ### Project Pitches [5 minutes for each team, 5 points]
 
-- Research question and motivation [4]: include one slide that briefly describes the following:
+- Research question and motivation [4 points]: include one slide that briefly describes the following:
 	- construct
 	- platform(s)
 	- data collection strategy
 	- data analysis strategy
-- project timeline [1]
+- project timeline [1 point]
 
 ### Midterm Presentation [15 minutes for each team, 15 points]
 
-- Brief research question and motivation [1]
-- Data and methods [5]
-- Preliminary results [3]
-- Planned next steps [1]
+- Brief research question and motivation [2 points]
+- Dataset overview (brief description of data collection and cleaning, summary of data) [4 points]
+- Analysis overview (brief description of methods and justification for choosing them) [4 points]
+- Preliminary results [4 points]
+- Planned next steps [1 points]
